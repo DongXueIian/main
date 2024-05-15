@@ -219,7 +219,7 @@ class apmControllernNode(Node):
             self.high_permission_velocity_call=True
     def update_state_1hz(self):
         global mavRate
-        self.vehicle._master.mav.request_data_stream_send(0, 0, mavutil.mavlink.MAV_DATA_STREAM_ALL,mavRate, 1)
+        # self.vehicle._master.mav.request_data_stream_send(0, 0, mavutil.mavlink.MAV_DATA_STREAM_ALL,mavRate, 1)
         pass
     def update_state_5hz(self):
         pass

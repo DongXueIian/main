@@ -367,7 +367,7 @@ def generate_launch_description():
     ld.add_action(declare_log_level_cmd)
     # Add any conditioned actions
 
-    ld.add_action(ros2_recorder_setup_cmd)
+    # ld.add_action(ros2_recorder_setup_cmd)
 
     ld.add_action(sllidar_setup_cmd)
     ld.add_action(apm_controller_node_setup_cmd)

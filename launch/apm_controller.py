@@ -35,6 +35,20 @@ def generate_launch_description():
             respawn=False,
     )
 
+    script_path = os.path.join(move_to_gps_target_real_fly_dir, 'launch', 'ros2_recorder.sh')
+    # 确保脚本有执行权限
+    os.chmod(script_path, 0o775)
+    ros2_recorder_setup_cmd = TimerAction(
+        period=10.0,  # 延迟时间（单位：秒）
+        actions=[
+            ExecuteProcess(
+                cmd=['bash', script_path],
+                output='screen',
+                shell=True
+            )
+        ]
+    )
+
     # 构建 Python 脚本的完整路径
     apm_controller_script = Path(move_to_gps_target_real_fly_dir) / "launch" / "apm_keyborad_controller.py"
 
@@ -48,5 +62,7 @@ def generate_launch_description():
     ld.add_action(rviz)
     # ld.add_action(not_height_tf_transform_cmd)
     ld.add_action(apm_controller_process)
+    ld.add_action(ros2_recorder_setup_cmd)
+
 
     return ld
