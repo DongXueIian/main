@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #请这样使用：
-# chmod +x record_filtered_topics.sh
-# ./record_filtered_topics.sh my_bag
+# chmod +x ros2_recorder.sh
+# ./ros2_recorder.sh my_bag
 
 # 检查是否有足够的参数传入
 if [ $# -eq 0 ]; then
