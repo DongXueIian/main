@@ -336,7 +336,15 @@ def generate_launch_description():
             executable='TF2ListenerExample',
             output='screen',
         )
-
+    
+    script_path = os.path.join(move_to_gps_target_real_fly_dir, 'launch', 'ros2_recorder.sh')
+    # 确保脚本有执行权限
+    os.chmod(script_path, 0o775)
+    ros2_recorder_setup_cmd=ExecuteProcess(
+            cmd=['bash', script_path],
+            output='screen',
+            shell=True
+        )
 
 
     # Create the launch description and populate
@@ -358,6 +366,8 @@ def generate_launch_description():
     ld.add_action(declare_use_respawn_cmd)
     ld.add_action(declare_log_level_cmd)
     # Add any conditioned actions
+
+    ld.add_action(ros2_recorder_setup_cmd)
 
     ld.add_action(sllidar_setup_cmd)
     ld.add_action(apm_controller_node_setup_cmd)

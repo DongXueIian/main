@@ -14,6 +14,7 @@ setup(
         ('share/' + package_name+'/launch', ['launch/apm_controller.py']),
         ('share/' + package_name+'/launch', ['launch/apm_keyborad_controller.py']),
         ('share/' + package_name+'/launch', ['launch/sllidar_a2m8_launch.py']),
+        ('share/' + package_name+'/launch', ['launch/ros2_recorder.sh']),
         ('share/' + package_name+'/params', ['params/nav2_params.yaml']),
         ('share/' + package_name+'/maps', ['maps/empty_world.pgm']),
         ('share/' + package_name+'/maps', ['maps/empty_world.yaml']),
