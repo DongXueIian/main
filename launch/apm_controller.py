@@ -62,7 +62,7 @@ def generate_launch_description():
     ld.add_action(rviz)
     # ld.add_action(not_height_tf_transform_cmd)
     ld.add_action(apm_controller_process)
-    ld.add_action(ros2_recorder_setup_cmd)
+    # ld.add_action(ros2_recorder_setup_cmd)
 
 
     return ld

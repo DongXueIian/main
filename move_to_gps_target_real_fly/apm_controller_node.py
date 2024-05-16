@@ -42,7 +42,7 @@ class apmControllernNode(Node):
         self.vehicle.mode = VehicleMode('GUIDED')
         # self.vehicle.parameters['ATTITUDE_FREQ'] = 20 
         # self.vehicle.set_stream_rate(1, 20)
-        self.vehicle._master.mav.request_data_stream_send(0, 0, mavutil.mavlink.MAV_DATA_STREAM_ALL,mavRate, 1)
+        # self.vehicle._master.mav.request_data_stream_send(0, 0, mavutil.mavlink.MAV_DATA_STREAM_ALL,mavRate, 1)
         self.gyro_x=0.0
         self.gyro_y=0.0
         self.gyro_z=0.0
@@ -125,7 +125,8 @@ class apmControllernNode(Node):
         # print('Connecting '+ipAddress)
         global mavRate
         self.get_logger().info('Connecting '+ipAddress)
-        vehicle = connect(ipAddress, wait_ready=True,rate=mavRate, baud=921600)
+        # vehicle = connect(ipAddress, wait_ready=True,rate=mavRate, baud=921600)
+        vehicle = connect(ipAddress, wait_ready=True, baud=921600)
         # print('successfully connect to '+ipAddress)
         self.get_logger().info('successfully connect to '+ipAddress)
         lastTime=time.time()

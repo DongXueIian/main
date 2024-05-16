@@ -6,7 +6,42 @@
 # ros2 bag play my_bag
 
 #!/bin/bash
-# 获取当前日期和时间，日期格式为 YYYY-MM-DD，时间格式为 HHMMSS
+
+topics_must_to_record=""
+topics_must_to_record+=" /apm_drone/target_mode"
+topics_must_to_record+=" /apm_drone/target_cmd_vel"
+topics_must_to_record+=" /apm_drone/high_permission_target_cmd_vel"
+topics_must_to_record+=" /apm_drone/current_velocity"
+topics_must_to_record+=" /apm_drone/current_mode_state"
+topics_must_to_record+=" /apm_drone/current_mode"
+topics_must_to_record+=" /apm_drone/current_attitude"
+topics_must_to_record+=" /apm_drone/current_GPS"
+topics_must_to_record+=" /apm_drone/current_battery"
+topics_must_to_record+=" /apm_drone/current_local_location"
+topics_must_to_record+=" /scan"
+topics_must_to_record+=" /cmd_vel"
+topics_must_to_record+=" /map"
+topics_must_to_record+=" /local_costmap/published_footprint"
+topics_must_to_record+=" /global_costmap/costmap"
+topics_must_to_record+=" /global_costmap/costmap_updates"
+topics_must_to_record+=" /plan"
+topics_must_to_record+=" /local_costmap/costmap"
+topics_must_to_record+=" /local_costmap/costmap_updates"
+topics_must_to_record+=" "
+topics_must_to_record+=" "
+topics_must_to_record+=" "
+topics_must_to_record+=" "
+topics_must_to_record+=" "
+topics_must_to_record+=" "
+topics_must_to_record+=" "
+topics_must_to_record+=" "
+topics_must_to_record+=" "
+topics_must_to_record+=" "
+topics_must_to_record+=" "
+
+# topics_must_to_record+=" /apm_drone/current_battery"
+
+# 获取当前日期和时间，日期格式为 YYYY-MM-DD，时间格式为 HH.MM.SS
 today=$(date +%Y-%m-%d)
 current_time=$(date +%H.%M.%S)
 
@@ -46,4 +81,4 @@ done
 
 echo "Recording topics: $topics_to_record"
 # 记录过滤后的主题
-ros2 bag record -o $output_directory $topics_to_record
+ros2 bag record -o $output_directory $topics_to_record $topics_must_to_record
