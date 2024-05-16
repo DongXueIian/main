@@ -78,10 +78,10 @@ controller_server:
       time_steps: 20  # 时间步数
       model_dt: 0.03  # 模型时间步长
       batch_size: 1600  # 批处理大小
-      vx_std: 0.15  # 前向速度标准差
+      vx_std: 0.25  # 前向速度标准差
       vy_std: 0.05  # 侧向速度标准差
       wz_std: 0.20  # 角速度标准差
-      vx_max: 0.5  # 最大前向速度
+      vx_max: 1.0 # 最大前向速度
       vx_min: -0.2  # 最小前向速度
       vy_max: 0.5  # 最大侧向速度
       wz_max: 0.40  # 最大角速度
@@ -380,8 +380,8 @@ velocity_smoother:  # 速度平滑器配置
     feedback: "OPEN_LOOP"  # 反馈类型（开环）
     max_velocity: [10.0, 10.0, 2.0]  # 最大速度限制 [线速度(m/s), 旋转速度(rad/s), 纵向速度(m/s)]
     min_velocity: [-10.6, -10.0, -1.0]  # 最小速度限制 [线速度(m/s), 旋转速度(rad/s), 纵向速度(m/s)]
-    max_accel: [0.2, 1.0, 0.5]  # 最大加速度 [线加速度(m/s^2), 旋转加速度(rad/s^2), 纵向加速度(m/s^2)]
-    max_decel: [-0.4, -10.2, -0.8]  # 最大减速度 [线加速度(m/s^2), 旋转加速度(rad/s^2), 纵向加速度(m/s^2)]
+    max_accel: [0.4, 1.0, 0.5]  # 最大加速度 [线加速度(m/s^2), 旋转加速度(rad/s^2), 纵向加速度(m/s^2)]
+    max_decel: [-1.0, -10.2, -0.8]  # 最大减速度 [线加速度(m/s^2), 旋转加速度(rad/s^2), 纵向加速度(m/s^2)]
     odom_topic: "odom"  # 里程计话题
     odom_duration: 0.1  # 里程计时长（秒）
     deadband_velocity: [0.0, 0.0, 0.0]  # 死区速度 [线速度(m/s), 旋转速度(rad/s), 纵向速度(m/s)]
