@@ -22,8 +22,8 @@ topics_must_to_record+=" /scan"
 topics_must_to_record+=" /cmd_vel"
 topics_must_to_record+=" /map"
 topics_must_to_record+=" /local_costmap/published_footprint"
-topics_must_to_record+=" /global_costmap/costmap"
-topics_must_to_record+=" /global_costmap/costmap_updates"
+# topics_must_to_record+=" /global_costmap/costmap"
+# topics_must_to_record+=" /global_costmap/costmap_updates"
 topics_must_to_record+=" /plan"
 topics_must_to_record+=" /local_costmap/costmap"
 topics_must_to_record+=" /local_costmap/costmap_updates"
@@ -54,7 +54,7 @@ else
     output_directory=$1
 fi
 
-exclude_topics="(/rosout /parameter_events /_hidden_topics)"
+exclude_topics="(/rosout /parameter_events /_hidden_topics /global_costmap/costmap /global_costmap/costmap_updates)"
 
 
 # 循环直到发现非默认节点的主题

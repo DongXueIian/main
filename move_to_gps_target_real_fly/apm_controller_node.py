@@ -175,6 +175,7 @@ class apmControllernNode(Node):
         第4位:vx,第5位:vy,第6位:vz,
         第7位:ax,第8位:ay,第9位:
         """
+        #设置地速
         msg = self.vehicle.message_factory.set_position_target_local_ned_encode(
                 0,
                 0, 0,

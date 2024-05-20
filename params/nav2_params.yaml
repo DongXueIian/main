@@ -281,18 +281,18 @@ map_saver:  # 地图保存器配置
     occupied_thresh_default: 0.65  # 默认占用阈值
     map_subscribe_transient_local: True  # 订阅地图瞬态本地
 
-planner_server:  # 规划器服务器配置
-  ros__parameters:  # ROS参数
-    expected_planner_frequency: 1.0  # 预期规划器频率（Hz）
+planner_server:
+  ros__parameters:
+    expected_planner_frequency: 1.0  # 规划器频率（Hz）
     use_sim_time: False  # 使用仿真时间
     planner_plugins: ["GridBased"]  # 规划器插件列表（网格型）
-    GridBased:  # 网格型规划器配置
+    GridBased:
       plugin: "nav2_navfn_planner/NavfnPlanner"  # 插件名称
-      tolerance: 1.0  # 容差
-      use_astar: false  # 使用A*算法（否）
-      allow_unknown: true  # 允许未知区域
-      cost_factor: 0.55
-      neutral_cost: 66
+      tolerance: 0.5  # 容差，从1.0降低至0.5以提高精确度
+      use_astar: true  # 改用A*算法，可能生成更优化的路径
+      allow_unknown: true  # 允许规划在未知区域
+      cost_factor: 0.95  # 提高成本因子，以使规划器更倾向于选择开放区域
+      neutral_cost: 50  # 降低中性成本，调整成本地图中的成本值转换
       lethal_cost: 253
       use_grid_path: false
 
