@@ -6,6 +6,9 @@ bt_navigator:  # 行为树导航器的配置开始
     odom_topic: /odom  # 里程计话题
     bt_loop_duration: 50  # 行为树循环的持续时间（以毫秒为单位）
     default_server_timeout: 20  # 默认的服务器超时时间（以秒为单位）
+    default_nav_to_pose_bt_xml: $(find-pkg-share move_to_gps_target)/behavior_tree/my_nav_to_pose_bt.xml
+    # default_nav_to_pose_bt_xml: $(find-pkg-share nav2_bt_navigator)/behavior_trees/navigate_to_pose_w_replanning_and_recovery.xml
+    default_nav_through_poses_bt_xml: $(find-pkg-share nav2_bt_navigator)/behavior_trees/navigate_through_poses_w_replanning_and_recovery.xml
     # default_nav_to_pose_bt_xml: "package://myTestPockage/behavior_trees/my_custom_nav_to_pose_bt.xml"
     #'default_nav_through_poses_bt_xml' 和 'default_nav_to_pose_bt_xml' 使用默认值：
     #nav2_bt_navigator/navigate_to_pose_w_replanning_and_recovery.xml 和 
@@ -78,7 +81,7 @@ controller_server:
       time_steps: 20  # 时间步数
       model_dt: 0.03  # 模型时间步长
       batch_size: 1600  # 批处理大小
-      vx_std: 0.25  # 前向速度标准差
+      vx_std: 0.35  # 前向速度标准差
       vy_std: 0.05  # 侧向速度标准差
       wz_std: 0.20  # 角速度标准差
       vx_max: 1.0 # 最大前向速度
@@ -380,7 +383,7 @@ velocity_smoother:  # 速度平滑器配置
     feedback: "OPEN_LOOP"  # 反馈类型（开环）
     max_velocity: [10.0, 10.0, 2.0]  # 最大速度限制 [线速度(m/s), 旋转速度(rad/s), 纵向速度(m/s)]
     min_velocity: [-10.6, -10.0, -1.0]  # 最小速度限制 [线速度(m/s), 旋转速度(rad/s), 纵向速度(m/s)]
-    max_accel: [0.4, 1.0, 0.5]  # 最大加速度 [线加速度(m/s^2), 旋转加速度(rad/s^2), 纵向加速度(m/s^2)]
+    max_accel: [0.4, 1.0, 0.3]  # 最大加速度 [线加速度(m/s^2), 旋转加速度(rad/s^2), 纵向加速度(m/s^2)]
     max_decel: [-1.0, -10.2, -0.8]  # 最大减速度 [线加速度(m/s^2), 旋转加速度(rad/s^2), 纵向加速度(m/s^2)]
     odom_topic: "odom"  # 里程计话题
     odom_duration: 0.1  # 里程计时长（秒）

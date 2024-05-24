@@ -118,22 +118,22 @@ class CmdVelModifier(Node):
                     setTwirlingCriticEnabled=False
                     range_degrees=max_range_degrees
                 # 根据距离设置速度限制
-                if min_distance < 1.5:
+                if min_distance < 3.0:
                     max_speed = 0.6
-                elif min_distance < 2.5:
-                    max_speed = 1.0
                 elif min_distance < 4.0:
+                    max_speed = 1.0
+                elif min_distance < 5.5:
                     max_speed = 1.5
-                elif min_distance < 6.0:
+                elif min_distance < 7.0:
                     max_speed = 2.0
-                elif min_distance < 8.0:
-                    max_speed = 2.5
                 elif min_distance < 10.0:
-                    max_speed = 3.0
+                    max_speed = 2.5
+                # elif min_distance < 10.0:
+                #     max_speed = 3.0
                 # elif min_distance < 13:
                 #     max_speed = 3.0
                 else:
-                    max_speed = 4.0  # 如果没有障碍物或障碍物距离足够远，则使用原速度
+                    max_speed = 3.0  # 如果没有障碍物或障碍物距离足够远，则使用原速度
                 # max_speed=max_speed*10
                 # 创建新的速度消息并发布
                 # print(range_degrees)
