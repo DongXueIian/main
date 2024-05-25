@@ -80,14 +80,14 @@ controller_server:
       plugin: "nav2_mppi_controller::MPPIController"  # 使用MPPIController插件
       time_steps: 20  # 时间步数
       model_dt: 0.03  # 模型时间步长
-      batch_size: 1600  # 批处理大小
-      vx_std: 0.35  # 前向速度标准差
-      vy_std: 0.05  # 侧向速度标准差
-      wz_std: 0.20  # 角速度标准差
-      vx_max: 1.0 # 最大前向速度
-      vx_min: -0.2  # 最小前向速度
-      vy_max: 0.5  # 最大侧向速度
-      wz_max: 0.40  # 最大角速度
+      batch_size: 2000  # 批处理大小
+      vx_std: 0.40  # 前向速度标准差
+      vy_std: 0.20  # 侧向速度标准差
+      wz_std: 0.25  # 角速度标准差
+      vx_max: 2.0 # 最大前向速度
+      vx_min: -0.5  # 最小前向速度
+      vy_max: 1.0  # 最大侧向速度
+      wz_max: 0.60  # 最大角速度
       iteration_count: 1  # 迭代次数
       prune_distance: 5.0  # 修剪距离
       transform_tolerance: 0.1  # 变换容差
@@ -98,8 +98,8 @@ controller_server:
       reset_period: 1.0  # 重置周期（仅在Humble中使用）
       regenerate_noises: false  # 是否重新生成噪声
       TrajectoryVisualizer:  # 轨迹可视化器配置
-        trajectory_step: 60  # 轨迹步长
-        time_step: 60  # 时间步长
+        trajectory_step: 30  # 轨迹步长
+        time_step: 30  # 时间步长
       AckermannConstraints:  # Ackermann约束配置
         min_turning_r: 0.2  # 最小转弯半径
       critics:  # 所有评价器列表
@@ -188,8 +188,8 @@ controller_server:
 local_costmap:  # 局部代价地图的配置开始
   local_costmap:
     ros__parameters:
-      update_frequency: 70.0  # 代价地图更新频率，单位为Hz（每秒更新次数）
-      publish_frequency: 70.0  # 代价地图发布频率，单位为Hz
+      update_frequency: 45.0  # 代价地图更新频率，单位为Hz（每秒更新次数）
+      publish_frequency: 2.0  # 代价地图发布频率，单位为Hz
       global_frame: odom  # 全局参考框架，通常是里程计odom
       robot_base_frame: base_link  # 机器人基础框架
       use_sim_time: False  # 使用仿真时间（对于仿真环境）
@@ -199,12 +199,12 @@ local_costmap:  # 局部代价地图的配置开始
 
       resolution: 0.2  # 代价地图分辨率，单位为米/像素
 
-      robot_radius: 0.75 # 机器人半径，用于计算碰撞
+      robot_radius: 0.95 # 机器人半径，用于计算碰撞
       plugins: ["voxel_layer", "inflation_layer"]  # 使用的插件列表
       inflation_layer:  # 膨胀层配置
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 4.0   # 成本缩放因子
-        inflation_radius: 1.5  # 膨胀半径，单位为米
+        cost_scaling_factor: 2.5   # 成本缩放因子
+        inflation_radius: 4.0  # 膨胀半径，单位为米
       voxel_layer:  # 体素层配置
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True  # 是否启用
@@ -233,12 +233,12 @@ local_costmap:  # 局部代价地图的配置开始
 global_costmap:  # 全局代价地图配置开始
   global_costmap:
     ros__parameters:
-      update_frequency: 2.0 # 代价地图更新频率，单位为Hz（每秒更新次数）
+      update_frequency: 10.0 # 代价地图更新频率，单位为Hz（每秒更新次数）
       publish_frequency: 2.0  # 代价地图发布频率，单位为Hz
       global_frame: map  # 全局参考框架，通常是地图
       robot_base_frame: base_link  # 机器人基础框架
       use_sim_time: False  # 使用仿真时间（对于仿真环境）
-      robot_radius: 0.75  # 机器人半径，用于计算碰撞
+      robot_radius: 0.95  # 机器人半径，用于计算碰撞
       resolution: 0.2  # 代价地图分辨率，单位为米/像素
       track_unknown_space: true  # 是否追踪未知空间
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]  # 使用的插件列表
@@ -263,8 +263,8 @@ global_costmap:  # 全局代价地图配置开始
         inflation_radius: 1.5  # 膨胀半径，单位为米
       inflation_layer:  # 膨胀层配置
         plugin: "nav2_costmap_2d::InflationLayer"  # 使用InflationLayer插件
-        cost_scaling_factor: 2.5  # 成本缩放因子
-        inflation_radius: 2.5 # 膨胀半径，单位为米
+        cost_scaling_factor: 1.2  # 成本缩放因子
+        inflation_radius: 4.0 # 膨胀半径，单位为米
         # inflate_around_unknown: true
         inflate_unknown: true
       always_send_full_costmap: True  # 是否总是发送完整的代价地图
@@ -292,11 +292,11 @@ planner_server:
     GridBased:
       plugin: "nav2_navfn_planner/NavfnPlanner"  # 插件名称
       tolerance: 0.5  # 容差，从1.0降低至0.5以提高精确度
-      use_astar: true  # 改用A*算法，可能生成更优化的路径
+      use_astar: False  # 改用A*算法，可能生成更优化的路径
       allow_unknown: true  # 允许规划在未知区域
-      cost_factor: 0.95  # 提高成本因子，以使规划器更倾向于选择开放区域
+      cost_factor: 1.0  # 提高成本因子，以使规划器更倾向于选择开放区域
       neutral_cost: 50  # 降低中性成本，调整成本地图中的成本值转换
-      lethal_cost: 253
+      lethal_cost: 240
       use_grid_path: false
 
 # planner_server:

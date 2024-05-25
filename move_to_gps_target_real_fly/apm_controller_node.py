@@ -20,7 +20,7 @@ apmControllernNameSpace='/apm_drone'
 hasClock=False
 simClock=None
 
-mavRate=40
+mavRate=10
 
 TAKE_OFF_ALTITUDE=1.0
 
