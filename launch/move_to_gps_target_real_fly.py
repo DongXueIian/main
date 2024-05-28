@@ -324,9 +324,9 @@ def generate_launch_description():
             # arguments=['time', '1.0']
         )
 
-    apm_gps_tf_node_setup_cmd=Node(
+    apm_tf_node_setup_cmd=Node(
             package='move_to_gps_target_real_fly',
-            executable='apm_gps_tf_node',
+            executable='apm_tf_node',
             output='screen',
             # arguments=['time', '1.0']
         )
@@ -372,7 +372,7 @@ def generate_launch_description():
     ld.add_action(sllidar_setup_cmd)
     ld.add_action(apm_controller_node_setup_cmd)
 
-    ld.add_action(apm_gps_tf_node_setup_cmd)
+    ld.add_action(apm_tf_node_setup_cmd)
     ld.add_action(static_tf_pub_map_to_odom_cmd)
     ld.add_action(static_tf_pub_scan_to_footprint_cmd)
     ld.add_action(static_tf_pub_base_link_to_scan_cmd)

@@ -14,13 +14,17 @@ from std_msgs.msg import Header
 
 # connectUrl='127.0.0.1:14550'
 # connectUrl='10.10.10.20:14550'
-connectUrl='/dev/usb_on_top'
+# connectUrl='/dev/usb_on_top'
+connectUrl='/dev/ttyS0'
 apmControllernNameSpace='/apm_drone'
 
 hasClock=False
 simClock=None
 
 mavRate=10
+
+import threading
+import time
 
 TAKE_OFF_ALTITUDE=1.0
 
@@ -46,7 +50,7 @@ class apmControllernNode(Node):
         self.gyro_x=0.0
         self.gyro_y=0.0
         self.gyro_z=0.0
-        
+        self.get_home_location_start=False
         self.control_mode='GUIDED'
         # 在连接后添加消息监听器
         self.vehicle.add_message_listener('RAW_IMU', self.listen_raw_imu)
@@ -104,6 +108,10 @@ class apmControllernNode(Node):
         self.publisher_local_location = self.create_publisher(
             PoseStamped, 
             apmControllernNameSpace+'/current_local_location',
+            10)
+        self.publisher_home_location = self.create_publisher(
+            NavSatFix,
+            apmControllernNameSpace+'/home_gps_location',
             10)
         # 定时发布无人机状态
         self.update_state_40hz_timer = self.create_timer(0.025, self.update_state_40hz)
@@ -215,14 +223,47 @@ class apmControllernNode(Node):
         global simClock
         simClock=msg
     def high_permission_velocity_callback(self, msg):
-        # 设置无人机的目标速度
+        # 设置无人机的高权限目标速度
         if self.control_mode=='GUIDED' and self.vehicle.armed:
             self.set_velocity_body(msg.linear.x, msg.linear.y, msg.linear.z,msg.angular.z)
             self.high_permission_velocity_call=True
     def update_state_1hz(self):
         global mavRate
         # self.vehicle._master.mav.request_data_stream_send(0, 0, mavutil.mavlink.MAV_DATA_STREAM_ALL,mavRate, 1)
-        pass
+
+        # self.get_logger().info(self.vehicle.home_location)
+        #vehicle.home_location在上电,起飞的时候会更新
+        if self.vehicle.home_location:
+
+            msg = NavSatFix()
+            msg.header.stamp = self.get_clock().now().to_msg()
+            msg.header.frame_id = 'world'
+            msg.latitude = self.vehicle.home_location.lat
+            msg.longitude = self.vehicle.home_location.lon
+            msg.altitude = self.vehicle.home_location.alt
+            self.publisher_home_location.publish(msg)
+            # self.get_logger().info(f"Published home location: lat={self.vehicle.home_location.lat}, lon={self.vehicle.home_location.lon}, alt={self.vehicle.home_location.alt}")
+
+        # 主动获取起飞点坐标
+        elif not self.get_home_location_start and self.vehicle!=None and self.vehicle.armed:
+            self.get_home_location_thread = threading.Thread(target=self.get_home_location)
+            self.get_home_location_thread.start()
+            self.get_home_location_start=True
+
+    def get_home_location(self):
+        self.set_velocity_body(0, 0, 0,0)
+        # 请求 home_location 信息
+        cmds = self.vehicle.commands
+        cmds.download()
+        cmds.wait_ready()
+        while self.vehicle.home_location==None:
+            self.get_logger().info('Waiting for home location...')
+            self.set_velocity_body(0, 0, 0,0)
+            time.sleep(1)
+        
+        self.get_logger().info(f"Home location acquired: lat={self.vehicle.home_location.lat}, lon={self.vehicle.home_location.lon}, alt={self.vehicle.home_location.alt}")
+
+
     def update_state_5hz(self):
         pass
     def loop_action_10hz(self):

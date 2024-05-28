@@ -34,7 +34,7 @@ setup(
             'gztf_filter_not_height=myTestPockage.gztf_filter_not_height:main',
             'my_velocity_controller=move_to_gps_target_real_fly.my_velocity_controller:main',
             'apm_controller_node=move_to_gps_target_real_fly.apm_controller_node:main',
-            'apm_gps_tf_node=move_to_gps_target_real_fly.apm_gps_tf_node:main'
+            'apm_tf_node=move_to_gps_target_real_fly.apm_tf_node:main'
         ],
     },
 )

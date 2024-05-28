@@ -204,7 +204,7 @@ local_costmap:  # 局部代价地图的配置开始
       inflation_layer:  # 膨胀层配置
         plugin: "nav2_costmap_2d::InflationLayer"
         cost_scaling_factor: 2.5   # 成本缩放因子
-        inflation_radius: 4.0  # 膨胀半径，单位为米
+        inflation_radius: 2.5  # 膨胀半径，单位为米
       voxel_layer:  # 体素层配置
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True  # 是否启用
@@ -264,7 +264,7 @@ global_costmap:  # 全局代价地图配置开始
       inflation_layer:  # 膨胀层配置
         plugin: "nav2_costmap_2d::InflationLayer"  # 使用InflationLayer插件
         cost_scaling_factor: 1.2  # 成本缩放因子
-        inflation_radius: 4.0 # 膨胀半径，单位为米
+        inflation_radius: 2.5 # 膨胀半径，单位为米
         # inflate_around_unknown: true
         inflate_unknown: true
       always_send_full_costmap: True  # 是否总是发送完整的代价地图
