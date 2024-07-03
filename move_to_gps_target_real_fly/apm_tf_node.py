@@ -45,7 +45,7 @@ class TFConverterNode(Node):
             self.target_gps_callback,
             10
         )
-        self.subscription_target_gps = self.create_subscription(
+        self.subscription_home_gps = self.create_subscription(
             NavSatFix,
             apmControllernNameSpace+'/home_gps_location',
             self.home_gps_callback,
